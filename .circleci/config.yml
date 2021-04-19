@@ -1,0 +1,34 @@
+version: 2.1
+
+orbs:
+  ruby: circleci/ruby@1.1.0
+  node: circleci/node@2
+
+jobs:
+  build:
+    docker:
+      - image: cimg/ruby:2.7.1-node
+    steps:
+      - checkout
+      - ruby/install-deps
+  test:
+    parallelism: 3
+    docker:
+      - image: cimg/ruby:2.7.1-node
+    environment:
+      BUNDLE_JOBS: "3"
+      BUNDLE_RETRY: "3"
+    steps:
+      - checkout
+      - ruby/install-deps
+      - ruby/rspec-test
+      - ruby/rubocop-check
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
