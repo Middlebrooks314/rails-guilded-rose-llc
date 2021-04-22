@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  # For details on the DSL availabe within this file, see https://guides.rubyonrails.org/routing.html
+  namespace :api do
+    namespace :v1 do
+      get '/welcome', to: 'welcome#index'
+    end
+  end
 end
