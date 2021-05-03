@@ -8,6 +8,7 @@ jobs:
   build:
     docker:
       - image: cimg/ruby:2.7.1-node
+      - image: circleci/postgres:11.2
     steps:
       - checkout
       - ruby/install-deps
@@ -15,12 +16,27 @@ jobs:
     parallelism: 3
     docker:
       - image: cimg/ruby:2.7.1-node
+      - image: circleci/postgres:9.5-alpine
+        environment:
+          POSTGRES_USER: rails_guilded_rose_llc
+          POSTGRES_DB: rails_guilded_rose_llc_test
+          POSTGRES_PASSWORD: ""
     environment:
       BUNDLE_JOBS: "3"
       BUNDLE_RETRY: "3"
+      PGHOST: 127.0.0.1
+      PGUSER: rails_guilded_rose_llc
+      PGPASSWORD: ""
+      RAILS_ENV: test
     steps:
       - checkout
       - ruby/install-deps
+      - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run:
+          name: Database setup
+          command: bundle exec rails db:schema:load --trace
       - ruby/rspec-test
       - ruby/rubocop-check
 
