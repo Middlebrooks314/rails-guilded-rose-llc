@@ -9,7 +9,8 @@ describe 'Items API', type: :request do
     expect(JSON.parse(response.body).size).to eq(0)
   end
   it 'returns a single item' do
-    FactoryBot.create(:item, name: 'Raspberry', sell_in: 5, quality: 10)
+    # FactoryBot.create(:item, name: 'Raspberry', sell_in: 5, quality: 10)
+    FactoryBot.create(:item)
 
     get '/api/v1/items'
 
