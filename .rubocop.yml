@@ -152,8 +152,6 @@ Style/NumericPredicate:
   Enabled: true
 Style/ColonMethodCall:
   Enabled: true
-Style/StringLiterals:
-  Enabled: true
 Security/Eval:
   Enabled: true
 Security/JSONLoad:
