@@ -93,6 +93,7 @@ GEM
       activesupport (>= 4.2.0)
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
+    json (2.5.1)
     listen (3.5.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -232,6 +233,7 @@ DEPENDENCIES
   database_cleaner
   factory_bot_rails
   faker!
+  json
   listen (~> 3.3)
   pg (~> 1.1)
   puma (~> 5.0)
@@ -247,7 +249,7 @@ DEPENDENCIES
   tzinfo-data
 
 RUBY VERSION
-   ruby 2.7.1p83
+   ruby 2.7.2p137
 
 BUNDLED WITH
    2.2.16
