@@ -1,4 +1,4 @@
-require_relative 'item_presenter'
+require_relative "item_presenter"
 
 class Api::V1::ItemsController < ApplicationController
   def index
@@ -10,12 +10,14 @@ class Api::V1::ItemsController < ApplicationController
 
   def show
     item = Item.find(params[:id])
-    json_response(item)
+    json_item = Api::V1::ItemPresenter.to_json(item)
+    json_response(json_item)
   end
 
   def create
     item = Item.create!(item_params)
-    json_response(item, :created)
+    json_item = Api::V1::ItemPresenter.to_json(item)
+    json_response(json_item, :created)
   end
 
   private
