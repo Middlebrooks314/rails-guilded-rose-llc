@@ -1,19 +1,11 @@
-class ItemPresenter
-  def self.to_json(item)
-    {
-      id: item.id,
-      name: item.name,
-      quality: item.quality,
-      sell_in: item.sell_in
-    }
-  end
-end
+require_relative 'item_presenter'
+
 class Api::V1::ItemsController < ApplicationController
   def index
     items = Item.all.map do |item|
-      ItemPresenter.to_json(item)
+      Api::V1::ItemPresenter.to_json(item)
     end
-    render json: items
+    json_response(items)
   end
 
   def show

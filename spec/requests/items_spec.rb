@@ -34,7 +34,7 @@ RSpec.describe 'Items API', type: :request do
     end
 
     it 'returns details for a single item' do
-      item = FactoryBot.create(:item)
+      FactoryBot.create(:item)
 
       get '/api/v1/items'
 
@@ -42,7 +42,7 @@ RSpec.describe 'Items API', type: :request do
       expect(parsed_body.count).to eq(1)
       actual_item = parsed_body[0]
       expect(actual_item.fetch(:name)).to eq('Lorem Ipsum')
-      expect(actual_item.fetch(:sell_in)).to eq(10)
+      expect(actual_item.fetch(:sellIn)).to eq(10)
       expect(actual_item.fetch(:quality)).to eq(99)
     end
   end
