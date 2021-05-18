@@ -38,9 +38,12 @@ RSpec.describe 'Items API', type: :request do
 
       get '/api/v1/items'
 
-      expect(item['name']).to eq('Lorem Ipsum')
-      expect(item['sell_in']).to eq(10)
-      expect(item['quality']).to eq(99)
+      parsed_body = JSON.parse(response.body).map(&:deep_symbolize_keys)
+      expect(parsed_body.count).to eq(1)
+      actual_item = parsed_body[0]
+      expect(actual_item.fetch(:name)).to eq('Lorem Ipsum')
+      expect(actual_item.fetch(:sell_in)).to eq(10)
+      expect(actual_item.fetch(:quality)).to eq(99)
     end
   end
 

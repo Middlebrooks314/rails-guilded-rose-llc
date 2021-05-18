@@ -1,6 +1,19 @@
+class ItemPresenter
+  def self.to_json(item)
+    {
+      id: item.id,
+      name: item.name,
+      quality: item.quality,
+      sell_in: item.sell_in
+    }
+  end
+end
 class Api::V1::ItemsController < ApplicationController
   def index
-    render json: Item.all
+    items = Item.all.map do |item|
+      ItemPresenter.to_json(item)
+    end
+    render json: items
   end
 
   def show
