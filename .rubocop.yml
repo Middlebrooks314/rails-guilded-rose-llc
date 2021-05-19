@@ -160,3 +160,5 @@ Security/MarshalLoad:
   Enabled: true
 Security/Open:
   Enabled: true
+Style/StringLiterals:
+  EnforcedStyle: double_quotes

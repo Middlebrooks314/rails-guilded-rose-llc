@@ -1,16 +1,23 @@
+require_relative "item_presenter"
+
 class Api::V1::ItemsController < ApplicationController
   def index
-    render json: Item.all
+    items = Item.all.map do |item|
+      Api::V1::ItemPresenter.to_json(item)
+    end
+    json_response(items)
   end
 
   def show
     item = Item.find(params[:id])
-    json_response(item)
+    json_item = Api::V1::ItemPresenter.to_json(item)
+    json_response(json_item)
   end
 
   def create
     item = Item.create!(item_params)
-    json_response(item, :created)
+    json_item = Api::V1::ItemPresenter.to_json(item)
+    json_response(json_item, :created)
   end
 
   private
