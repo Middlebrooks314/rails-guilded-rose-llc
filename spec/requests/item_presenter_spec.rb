@@ -1,8 +1,8 @@
-require "rails_helper"
+require 'rails_helper'
 
 describe Api::V1::ItemPresenter do
-  describe ".to_json" do
-    it "returns an item object with only the id, name, sellIn, and quality attributes" do
+  describe '.to_json' do
+    it 'returns an item object with only the id, name, sellIn, and quality attributes' do
       item = FactoryBot.create(:item)
 
       presented_item = Api::V1::ItemPresenter.to_json(item)
@@ -15,8 +15,8 @@ describe Api::V1::ItemPresenter do
     end
   end
 
-  it "converts attributes from snake case to camel case" do
-    item = FactoryBot.create(:item, name: "FooBar", sell_in: 5, quality: 11)
+  it 'converts attributes from snake case to camel case' do
+    item = FactoryBot.create(:item, name: 'FooBar', sell_in: 5, quality: 11)
 
     presented_item = Api::V1::ItemPresenter.to_json(item)
 

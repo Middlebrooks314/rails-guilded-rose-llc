@@ -1,4 +1,4 @@
-require_relative "item_presenter"
+require_relative 'item_presenter'
 
 class Api::V1::ItemsController < ApplicationController
   def index
