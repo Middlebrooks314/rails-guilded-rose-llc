@@ -15,7 +15,8 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   def create
-    item = Item.create!(item_params)
+    item_presenter = Api::V1::ItemPresenter
+    item = Item.create!(item_presenter.snakecase_keys(params))
     json_item = Api::V1::ItemPresenter.to_json(item)
     json_response(json_item, :created)
   end
