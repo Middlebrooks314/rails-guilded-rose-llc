@@ -95,13 +95,13 @@ RSpec.describe 'Items API', type: :request do
   describe 'POST api/v1/items' do
     context 'when item post request attributes are valid' do
       it 'creates a new item in the database' do
-        valid_attributes = {name: 'Asparagus', sell_in: 10, quality: 25}
+        valid_attributes = {name: 'Asparagus', sellIn: 10, quality: 25}
 
         expect { post '/api/v1/items', params: valid_attributes }.to change(Item, :count).by(+1)
       end
 
       it 'returns status code 201' do
-        valid_attributes = {name: 'Asparagus', sell_in: 10, quality: 25}
+        valid_attributes = {name: 'Asparagus', sellIn: 10, quality: 25}
         post '/api/v1/items', params: valid_attributes
 
         expect(response).to have_http_status(201)
