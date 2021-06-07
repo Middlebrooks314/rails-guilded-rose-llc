@@ -32,6 +32,7 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'json'
   gem 'pry'
+  gem 'spinach-rails'
 end
 
 group :test do
