@@ -5,7 +5,6 @@ Feature: Test post endpoint
   Scenario: In order to verify that an item can be added
     Given I create an Item
     And I create another Item
-    And I create another Item
     And I create a third Item
     When I request an index of Items
     Then I should see three items
