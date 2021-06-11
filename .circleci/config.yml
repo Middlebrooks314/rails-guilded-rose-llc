@@ -41,7 +41,7 @@ jobs:
       - ruby/rubocop-check
       - run:
           name: Wait for rails server
-          command: dockerize -wait tcp://localhost:3000 -timeout 1m
+          command: dockerize -wait rails server -timeout 30s
       - run: bundle exec rake spinach
 workflows:
   version: 2
