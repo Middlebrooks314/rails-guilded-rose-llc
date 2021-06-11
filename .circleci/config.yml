@@ -39,7 +39,8 @@ jobs:
           command: bundle exec rails db:schema:load --trace
       - ruby/rspec-test
       - ruby/rubocop-check
-      - run: -wait bundle exec rails server -timeout 1min&
+      - run: bundle exec rails server&
+      - run: sleep 30s
       - run: bundle exec rake spinach
 workflows:
   version: 2
