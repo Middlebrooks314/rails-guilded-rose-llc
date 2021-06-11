@@ -40,7 +40,7 @@ jobs:
       - ruby/rspec-test
       - ruby/rubocop-check
       - run: bundle exec rails server&
-      - run: sleep 30s
+      - run: sleep 1min
       - run: bundle exec rake spinach
 workflows:
   version: 2
