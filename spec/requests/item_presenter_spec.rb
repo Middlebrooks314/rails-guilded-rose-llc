@@ -1,8 +1,8 @@
-require "rails_helper"
+require 'rails_helper'
 
 describe Api::V1::ItemPresenter do
-  describe ".to_json" do
-    it "returns an item object with only the id, name, sellIn, and quality attributes" do
+  describe '.to_json' do
+    it 'returns an item object with only the id, name, sellIn, and quality attributes' do
       item = FactoryBot.create(:item)
 
       presented_item = Api::V1::ItemPresenter.to_json(item)
@@ -15,8 +15,8 @@ describe Api::V1::ItemPresenter do
     end
   end
 
-  it "returns item with camelCase attributes" do
-    item = FactoryBot.create(:item, name: "FooBar", sell_in: 5, quality: 11)
+  it 'returns item with camelCase attributes' do
+    item = FactoryBot.create(:item, name: 'FooBar', sell_in: 5, quality: 11)
 
     presented_item = Api::V1::ItemPresenter.to_json(item)
 
@@ -24,52 +24,52 @@ describe Api::V1::ItemPresenter do
     expect(presented_item).not_to include(:sell_in)
   end
 
-  it "converts camelCase params to snake_case" do
+  it 'converts camelCase params to snake_case' do
     item_presenter = Api::V1::ItemPresenter
-    params = {name: "FooBar", sellIn: 5, quality: 11}
+    params = {name: 'FooBar', sellIn: 5, quality: 11}
 
     actual = item_presenter.snakecase_keys(params)
-    expected = {"name" => "FooBar", "quality" => 11, "sell_in" => 5}
+    expected = {'name' => 'FooBar', 'quality' => 11, 'sell_in' => 5}
 
     expect(actual).to eq(expected)
   end
 
-  it "it doesnt return extra params" do
+  it 'it doesnt return extra params' do
     item_presenter = Api::V1::ItemPresenter
-    params = {name: "FooBar", sellIn: 5, quality: 11, fooBar: 5}
+    params = {name: 'FooBar', sellIn: 5, quality: 11, fooBar: 5}
 
     actual = item_presenter.snakecase_keys(params)
-    expected = {"name" => "FooBar", "quality" => 11, "sell_in" => 5}
+    expected = {'name' => 'FooBar', 'quality' => 11, 'sell_in' => 5}
 
     expect(actual).to eq(expected)
   end
 
-  it "returns unsupplied required params set to nil" do
+  it 'returns unsupplied required params set to nil' do
     item_presenter = Api::V1::ItemPresenter
-    params = {name: "FooBar", sellIn: 5}
+    params = {name: 'FooBar', sellIn: 5}
 
     actual = item_presenter.snakecase_keys(params)
-    expected = {"name" => "FooBar", "sell_in" => 5, "quality" => nil}
+    expected = {'name' => 'FooBar', 'sell_in' => 5, 'quality' => nil}
 
     expect(actual).to eq(expected)
   end
 
-  it "returns empty string params as an empty string" do
+  it 'returns empty string params as an empty string' do
     item_presenter = Api::V1::ItemPresenter
-    params = {name: "", sellIn: 5, quality: 5}
+    params = {name: '', sellIn: 5, quality: 5}
 
     actual = item_presenter.snakecase_keys(params)
-    expected = {"name" => "", "sell_in" => 5, "quality" => 5}
+    expected = {'name' => '', 'sell_in' => 5, 'quality' => 5}
 
     expect(actual).to eq(expected)
   end
 
-  it "returns nil attributes as nil" do
+  it 'returns nil attributes as nil' do
     item_presenter = Api::V1::ItemPresenter
-    params = {name: "FooBar", sellIn: 5, quality: nil}
+    params = {name: 'FooBar', sellIn: 5, quality: nil}
 
     actual = item_presenter.snakecase_keys(params)
-    expected = {"name" => "FooBar", "sell_in" => 5, "quality" => nil}
+    expected = {'name' => 'FooBar', 'sell_in' => 5, 'quality' => nil}
 
     expect(actual).to eq(expected)
   end
