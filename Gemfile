@@ -32,15 +32,17 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'json'
   gem 'pry'
+  gem 'rspec'
+  gem 'rspec-rails'
+  gem 'spinach-rails'
 end
 
 group :test do
   gem 'database_cleaner'
   gem 'factory_bot_rails'
   gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'master'
-  gem 'rspec'
+  gem 'httparty'
   gem 'rspec_junit_formatter'
-  gem 'rspec-rails'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
   gem 'shoulda-matchers', '~> 3.1'
