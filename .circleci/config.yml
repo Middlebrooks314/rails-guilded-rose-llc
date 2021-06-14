@@ -39,7 +39,10 @@ jobs:
           command: bundle exec rails db:schema:load --trace
       - ruby/rspec-test
       - ruby/rubocop-check
-      - run: bundle exec rake spinach
+      - run:
+          name: Run the server
+          command: bundle exec rails s
+          background: true
 workflows:
   version: 2
   build_and_test:

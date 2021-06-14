@@ -1,18 +1,18 @@
 class Spinach::Features::TestPostEndpoint < Spinach::FeatureSteps
   step 'I create an Item' do
-    HTTParty.post('http://localhost:3000/api/v1/items', {body: {name: 'Foo', quality: 4, sellIn: 4}})
+    HTTParty.post('https://localhost:3000/api/v1/items', {body: {name: 'Foo', quality: 4, sellIn: 4}})
   end
 
   step 'I create another Item' do
-    HTTParty.post('http://localhost:3000/api/v1/items', {body: {name: 'Bar', quality: 5, sellIn: 5}})
+    HTTParty.post('https://localhost:3000/api/v1/items', {body: {name: 'Bar', quality: 5, sellIn: 5}})
   end
 
   step 'I create a third Item' do
-    HTTParty.post('http://localhost:3000/api/v1/items', {body: {name: 'FooBar', quality: 6, sellIn: 6}})
+    HTTParty.post('https://localhost:3000/api/v1/items', {body: {name: 'FooBar', quality: 6, sellIn: 6}})
   end
 
   step 'I request an index of Items' do
-    @items = HTTParty.get('http://localhost:3000/api/v1/items')
+    @items = HTTParty.get('https://localhost:3000/api/v1/items')
   end
 
   step 'I should see three items' do
