@@ -1,12 +1,12 @@
-ENV['RAILS_ENV'] = 'test'
-require './config/environment'
+ENV["RAILS_ENV"] = "test"
+require "./config/environment"
 
-require 'rspec'
-require 'rspec-rails'
+require "rspec"
+require "rspec-rails"
 
 include RSpec::Matchers
 
-require 'database_cleaner'
+require "database_cleaner"
 DatabaseCleaner.strategy = :truncation
 
 Spinach.hooks.before_scenario { DatabaseCleaner.clean }

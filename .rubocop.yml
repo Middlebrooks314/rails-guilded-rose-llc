@@ -7,6 +7,10 @@ AllCops:
     - 'public/**/*'
     - 'test/data/**/*'
     - 'vendor/**/*'
+    - 'bin/**/*'
+    - 'config/**/*'
+    - 'db/**/*'
+    - 'app/mailers/*'
 # Default lint cops
 Lint/AssignmentInCondition:
   Enabled: true
@@ -161,4 +165,4 @@ Security/MarshalLoad:
 Security/Open:
   Enabled: true
 Style/StringLiterals:
-  EnforcedStyle: single_quotes
+  EnforcedStyle: double_quotes
