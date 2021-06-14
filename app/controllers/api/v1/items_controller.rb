@@ -1,6 +1,8 @@
 require_relative "item_presenter"
 
 class Api::V1::ItemsController < ApplicationController
+  http_basic_authenticate_with name: "guilded_rose_admin", password: "super_secret_password_123", only: :create
+
   def index
     items = Item.all.map do |item|
       Api::V1::ItemPresenter.to_json(item)
@@ -22,6 +24,7 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   private
+
   def item_params
     params.permit(:name, :sell_in, :quality)
   end
