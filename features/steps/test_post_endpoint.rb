@@ -1,14 +1,26 @@
 class Spinach::Features::TestPostEndpoint < Spinach::FeatureSteps
   step "I create an Item" do
-    HTTParty.post("http://localhost:3000/api/v1/items", {body: {name: "Foo", quality: 4, sellIn: 4}})
+    options = {
+      body: {name: "Foo", quality: 4, sellIn: 4},
+      headers: {authorization: "Basic Z3VpbGRlZF9yb3NlX2FkbWluOnN1cGVyX3NlY3JldF9wYXNzd29yZF8xMjM="}
+    }
+    HTTParty.post("http://localhost:3000/api/v1/items", options)
   end
 
   step "I create another Item" do
-    HTTParty.post("http://localhost:3000/api/v1/items", {body: {name: "Bar", quality: 5, sellIn: 5}})
+    options = {
+      body: {name: "Bar", quality: 5, sellIn: 5},
+      headers: {authorization: "Basic Z3VpbGRlZF9yb3NlX2FkbWluOnN1cGVyX3NlY3JldF9wYXNzd29yZF8xMjM="}
+    }
+    HTTParty.post("http://localhost:3000/api/v1/items", options)
   end
 
   step "I create a third Item" do
-    HTTParty.post("http://localhost:3000/api/v1/items", {body: {name: "FooBar", quality: 6, sellIn: 6}})
+    options = {
+      body: {name: "FooBar", quality: 6, sellIn: 6},
+      headers: {authorization: "Basic Z3VpbGRlZF9yb3NlX2FkbWluOnN1cGVyX3NlY3JldF9wYXNzd29yZF8xMjM="}
+    }
+    HTTParty.post("http://localhost:3000/api/v1/items", options)
   end
 
   step "I request an index of Items" do
