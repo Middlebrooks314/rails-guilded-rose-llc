@@ -96,37 +96,61 @@ RSpec.describe "Items API", type: :request do
     context "when item post request attributes are valid" do
       it "creates a new item in the database" do
         valid_attributes = {name: "Asparagus", sellIn: 10, quality: 25}
+        auth_headers = {authorization: "Basic Z3VpbGRlZF9yb3NlX2FkbWluOnN1cGVyX3NlY3JldF9wYXNzd29yZF8xMjM="}
 
-        expect { post "/api/v1/items", params: valid_attributes }.to change(Item, :count).by(+1)
+        expect { post "/api/v1/items", params: valid_attributes, headers: auth_headers}.to change(Item, :count).by(+1)
       end
 
       it "returns status code 201" do
         valid_attributes = {name: "Asparagus", sellIn: 10, quality: 25}
-        post "/api/v1/items", params: valid_attributes
+        auth_headers = {authorization: "Basic Z3VpbGRlZF9yb3NlX2FkbWluOnN1cGVyX3NlY3JldF9wYXNzd29yZF8xMjM="}
+
+        post "/api/v1/items", params: valid_attributes, headers: auth_headers
 
         expect(response).to have_http_status(201)
       end
     end
 
-    context "wwhen item post request attributes are invalid" do
+    context "when item post request attributes are invalid" do
       it "does not create a new item in the database" do
         invalid_attributes = {title: "Lorem Ipsum"}
+        auth_headers = {authorization: "Basic Z3VpbGRlZF9yb3NlX2FkbWluOnN1cGVyX3NlY3JldF9wYXNzd29yZF8xMjM="}
 
-        expect { post "/api/v1/items", params: invalid_attributes }.to change(Item, :count).by(0)
+        expect { post "/api/v1/items", params: invalid_attributes, headers: auth_headers }.to change(Item, :count).by(0)
       end
 
       it "returns status code 422 for invalid attributes" do
         invalid_attributes = {title: "Lorem Ipsum"}
-        post "/api/v1/items", params: invalid_attributes
+        auth_headers = {authorization: "Basic Z3VpbGRlZF9yb3NlX2FkbWluOnN1cGVyX3NlY3JldF9wYXNzd29yZF8xMjM="}
+
+        post "/api/v1/items", params: invalid_attributes, headers: auth_headers
 
         expect(response).to have_http_status(422)
       end
 
       it "returns a failure message for missing attributes" do
         invalid_attributes = {title: "Lorem Ipsum"}
-        post "/api/v1/items", params: invalid_attributes
+        auth_headers = {authorization: "Basic Z3VpbGRlZF9yb3NlX2FkbWluOnN1cGVyX3NlY3JldF9wYXNzd29yZF8xMjM="}
+
+        post "/api/v1/items", params: invalid_attributes, headers: auth_headers
 
         expect(response.body).to match(/Validation failed: Name can't be blank/)
+      end
+
+      it "returns status code 401 for missing authorization headers" do
+        valid_attributes = {name: "Lorem Ipsum", sellIn: 15, quality: 85}
+
+        post "/api/v1/items", params: valid_attributes
+
+        expect(response).to have_http_status(401)
+      end
+
+      it "returns a failure message for missing authorization headers" do
+        valid_attributes = {name: "Lorem Ipsum", sellIn: 15, quality: 85}
+
+        post "/api/v1/items", params: valid_attributes
+
+        expect(response.body).to match(/HTTP Basic: Access denied./)
       end
     end
   end
