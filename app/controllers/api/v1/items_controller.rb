@@ -1,7 +1,7 @@
 require_relative "item_presenter"
 
 class Api::V1::ItemsController < ApplicationController
-  http_basic_authenticate_with name: "guilded_rose_admin", password: "super_secret_password_123", only: :create
+  http_basic_authenticate_with name: Rails.application.credentials.username, password: Rails.application.credentials.password, only: :create
 
   def index
     items = Item.all.map do |item|
