@@ -95,15 +95,21 @@ RSpec.describe "Items API", type: :request do
   describe "POST api/v1/items" do
     context "when item post request attributes are valid" do
       it "creates a new item in the database" do
+        credentials_manager = Api::V1::CredentialsManager.new
+
         valid_attributes = {name: "Asparagus", sellIn: 10, quality: 25}
-        auth_headers = {authorization: "Basic Z3VpbGRlZF9yb3NlX2FkbWluOnN1cGVyX3NlY3JldF9wYXNzd29yZF8xMjM="}
+        credentials = "Basic #{credentials_manager.base64encode(Rails.application.credentials.username, Rails.application.credentials.password)}"
+        auth_headers = {authorization: credentials}
 
         expect { post "/api/v1/items", params: valid_attributes, headers: auth_headers}.to change(Item, :count).by(+1)
       end
 
       it "returns status code 201" do
+        credentials_manager = Api::V1::CredentialsManager.new
+
         valid_attributes = {name: "Asparagus", sellIn: 10, quality: 25}
-        auth_headers = {authorization: "Basic Z3VpbGRlZF9yb3NlX2FkbWluOnN1cGVyX3NlY3JldF9wYXNzd29yZF8xMjM="}
+        credentials = "Basic #{credentials_manager.base64encode(Rails.application.credentials.username, Rails.application.credentials.password)}"
+        auth_headers = {authorization: credentials}
 
         post "/api/v1/items", params: valid_attributes, headers: auth_headers
 
@@ -113,15 +119,21 @@ RSpec.describe "Items API", type: :request do
 
     context "when item post request attributes are invalid" do
       it "does not create a new item in the database" do
+        credentials_manager = Api::V1::CredentialsManager.new
+
         invalid_attributes = {title: "Lorem Ipsum"}
-        auth_headers = {authorization: "Basic Z3VpbGRlZF9yb3NlX2FkbWluOnN1cGVyX3NlY3JldF9wYXNzd29yZF8xMjM="}
+        credentials = "Basic #{credentials_manager.base64encode(Rails.application.credentials.username, Rails.application.credentials.password)}"
+        auth_headers = {authorization: credentials}
 
         expect { post "/api/v1/items", params: invalid_attributes, headers: auth_headers }.to change(Item, :count).by(0)
       end
 
       it "returns status code 422 for invalid attributes" do
+        credentials_manager = Api::V1::CredentialsManager.new
+
         invalid_attributes = {title: "Lorem Ipsum"}
-        auth_headers = {authorization: "Basic Z3VpbGRlZF9yb3NlX2FkbWluOnN1cGVyX3NlY3JldF9wYXNzd29yZF8xMjM="}
+        credentials = "Basic #{credentials_manager.base64encode(Rails.application.credentials.username, Rails.application.credentials.password)}"
+        auth_headers = {authorization: credentials}
 
         post "/api/v1/items", params: invalid_attributes, headers: auth_headers
 
@@ -129,8 +141,11 @@ RSpec.describe "Items API", type: :request do
       end
 
       it "returns a failure message for missing attributes" do
+        credentials_manager = Api::V1::CredentialsManager.new
+
         invalid_attributes = {title: "Lorem Ipsum"}
-        auth_headers = {authorization: "Basic Z3VpbGRlZF9yb3NlX2FkbWluOnN1cGVyX3NlY3JldF9wYXNzd29yZF8xMjM="}
+        credentials = "Basic #{credentials_manager.base64encode(Rails.application.credentials.username, Rails.application.credentials.password)}"
+        auth_headers = {authorization: credentials}
 
         post "/api/v1/items", params: invalid_attributes, headers: auth_headers
 
