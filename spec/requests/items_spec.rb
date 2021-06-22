@@ -1,4 +1,5 @@
 require "rails_helper"
+require_relative "../../lib/credentials_manager"
 
 RSpec.describe "Items API", type: :request do
   describe "GET api/v1/items", type: :request do
@@ -93,25 +94,23 @@ RSpec.describe "Items API", type: :request do
   end
 
   describe "POST api/v1/items" do
+    before(:each) do
+      @credentials_manager = CredentialsManager.new
+      credentials = "Basic #{@credentials_manager.base64encode(Rails.application.credentials.username, Rails.application.credentials.password)}"
+      @auth_headers = {authorization: credentials}
+    end
+
     context "when item post request attributes are valid" do
       it "creates a new item in the database" do
-        credentials_manager = Api::V1::CredentialsManager.new
-
         valid_attributes = {name: "Asparagus", sellIn: 10, quality: 25}
-        credentials = "Basic #{credentials_manager.base64encode(Rails.application.credentials.username, Rails.application.credentials.password)}"
-        auth_headers = {authorization: credentials}
 
-        expect { post "/api/v1/items", params: valid_attributes, headers: auth_headers}.to change(Item, :count).by(+1)
+        expect { post "/api/v1/items", params: valid_attributes, headers: @auth_headers}.to change(Item, :count).by(+1)
       end
 
       it "returns status code 201" do
-        credentials_manager = Api::V1::CredentialsManager.new
-
         valid_attributes = {name: "Asparagus", sellIn: 10, quality: 25}
-        credentials = "Basic #{credentials_manager.base64encode(Rails.application.credentials.username, Rails.application.credentials.password)}"
-        auth_headers = {authorization: credentials}
 
-        post "/api/v1/items", params: valid_attributes, headers: auth_headers
+        post "/api/v1/items", params: valid_attributes, headers: @auth_headers
 
         expect(response).to have_http_status(201)
       end
@@ -119,35 +118,23 @@ RSpec.describe "Items API", type: :request do
 
     context "when item post request attributes are invalid" do
       it "does not create a new item in the database" do
-        credentials_manager = Api::V1::CredentialsManager.new
-
         invalid_attributes = {title: "Lorem Ipsum"}
-        credentials = "Basic #{credentials_manager.base64encode(Rails.application.credentials.username, Rails.application.credentials.password)}"
-        auth_headers = {authorization: credentials}
 
-        expect { post "/api/v1/items", params: invalid_attributes, headers: auth_headers }.to change(Item, :count).by(0)
+        expect { post "/api/v1/items", params: invalid_attributes, headers: @auth_headers }.to change(Item, :count).by(0)
       end
 
       it "returns status code 422 for invalid attributes" do
-        credentials_manager = Api::V1::CredentialsManager.new
-
         invalid_attributes = {title: "Lorem Ipsum"}
-        credentials = "Basic #{credentials_manager.base64encode(Rails.application.credentials.username, Rails.application.credentials.password)}"
-        auth_headers = {authorization: credentials}
 
-        post "/api/v1/items", params: invalid_attributes, headers: auth_headers
+        post "/api/v1/items", params: invalid_attributes, headers: @auth_headers
 
         expect(response).to have_http_status(422)
       end
 
       it "returns a failure message for missing attributes" do
-        credentials_manager = Api::V1::CredentialsManager.new
-
         invalid_attributes = {title: "Lorem Ipsum"}
-        credentials = "Basic #{credentials_manager.base64encode(Rails.application.credentials.username, Rails.application.credentials.password)}"
-        auth_headers = {authorization: credentials}
 
-        post "/api/v1/items", params: invalid_attributes, headers: auth_headers
+        post "/api/v1/items", params: invalid_attributes, headers: @auth_headers
 
         expect(response.body).to match(/Validation failed: Name can't be blank/)
       end

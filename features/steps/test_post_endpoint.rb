@@ -1,35 +1,34 @@
-class Spinach::Features::TestPostEndpoint < Spinach::FeatureSteps
-  step "I create an Item" do
-    credentials_manager = Api::V1::CredentialsManager.new
-    credentials = "Basic #{credentials_manager.base64encode(Rails.application.credentials.username, Rails.application.credentials.password)}"
+require_relative "../../lib/credentials_manager"
 
+class Spinach::Features::TestPostEndpoint < Spinach::FeatureSteps
+  before do
+    @credentials_manager = CredentialsManager.new
+    @credentials = "Basic #{@credentials_manager.base64encode(Rails.application.credentials.username, Rails.application.credentials.password)}"
+    @auth_headers = {authorization: @credentials}
+  end
+
+  step "I create an Item" do
     options = {
       body: {name: "Foo", quality: 4, sellIn: 4},
-      headers: {authorization: credentials}
+      headers: @auth_headers
     }
 
     HTTParty.post("http://localhost:3000/api/v1/items", options)
   end
 
   step "I create another Item" do
-    credentials_manager = Api::V1::CredentialsManager.new
-    credentials = "Basic #{credentials_manager.base64encode(Rails.application.credentials.username, Rails.application.credentials.password)}"
-
     options = {
       body: {name: "Bar", quality: 5, sellIn: 5},
-      headers: {authorization: credentials}
+      headers: @auth_headers
     }
 
     HTTParty.post("http://localhost:3000/api/v1/items", options)
   end
 
   step "I create a third Item" do
-    credentials_manager = Api::V1::CredentialsManager.new
-    credentials = "Basic #{credentials_manager.base64encode(Rails.application.credentials.username, Rails.application.credentials.password)}"
-
     options = {
       body: {name: "FooBar", quality: 6, sellIn: 6},
-      headers: {authorization: credentials}
+      headers: @auth_headers
     }
 
     HTTParty.post("http://localhost:3000/api/v1/items", options)
