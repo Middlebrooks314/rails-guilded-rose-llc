@@ -1,14 +1,37 @@
+require_relative "../../lib/credentials_manager"
+
 class Spinach::Features::TestPostEndpoint < Spinach::FeatureSteps
+  before do
+    @credentials_manager = CredentialsManager.new
+    @credentials = "Basic #{@credentials_manager.base64encode(Rails.application.credentials.username, Rails.application.credentials.password)}"
+    @auth_headers = {authorization: @credentials}
+  end
+
   step "I create an Item" do
-    HTTParty.post("http://localhost:3000/api/v1/items", {body: {name: "Foo", quality: 4, sellIn: 4}})
+    options = {
+      body: {name: "Foo", quality: 4, sellIn: 4},
+      headers: @auth_headers
+    }
+
+    HTTParty.post("http://localhost:3000/api/v1/items", options)
   end
 
   step "I create another Item" do
-    HTTParty.post("http://localhost:3000/api/v1/items", {body: {name: "Bar", quality: 5, sellIn: 5}})
+    options = {
+      body: {name: "Bar", quality: 5, sellIn: 5},
+      headers: @auth_headers
+    }
+
+    HTTParty.post("http://localhost:3000/api/v1/items", options)
   end
 
   step "I create a third Item" do
-    HTTParty.post("http://localhost:3000/api/v1/items", {body: {name: "FooBar", quality: 6, sellIn: 6}})
+    options = {
+      body: {name: "FooBar", quality: 6, sellIn: 6},
+      headers: @auth_headers
+    }
+
+    HTTParty.post("http://localhost:3000/api/v1/items", options)
   end
 
   step "I request an index of Items" do
