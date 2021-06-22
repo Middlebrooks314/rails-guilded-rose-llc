@@ -1,4 +1,4 @@
-class Api::V1::CredentialsManager < ApplicationController
+class CredentialsManager
 
   def base64encode(username, password)
     Base64.encode64("#{username}:#{password}")
