@@ -148,15 +148,16 @@ curl https://localhost:3000.com/api/v1/items/2 | jq
 
    **Required:**
  
-   None
+  For <username>:<password> please contact the senior developer for the basic auth credentials.
 
 * **Data Params**
 
   `{name: string, sell_in: integer, quality: integer}`
+
 * **Sample cURL Request:**
 
 ```bash
-curl -X POST -F 'name=yogurt' -F 'sell_in=6' -F 'quality=7' https://localhost:3000/api/v1/items | jq
+curl --user <username>:<password> http://localhost:3000//api/v1/items -X POST -F 'name=Baz' -F 'sellIn=6' -F 'quality=7' | jq
 ```
 
 * **Success Response:**
