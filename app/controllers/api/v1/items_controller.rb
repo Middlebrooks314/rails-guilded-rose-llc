@@ -1,8 +1,7 @@
 require_relative "item_presenter"
 
 class Api::V1::ItemsController < ApplicationController
-  http_basic_authenticate_with name: Rails.application.credentials.username, password: Rails.application.credentials.password, only: :create
-
+  http_basic_authenticate_with name: ENV["USERNAME"], password: ENV["PASSWORD"], only: :create
   def index
     items = Item.all.map do |item|
       Api::V1::ItemPresenter.to_json(item)

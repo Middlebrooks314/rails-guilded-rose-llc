@@ -3,7 +3,7 @@ require_relative "../../lib/credentials_manager"
 class Spinach::Features::TestPostEndpoint < Spinach::FeatureSteps
   before do
     @credentials_manager = CredentialsManager.new
-    @credentials = "Basic #{@credentials_manager.base64encode(Rails.application.credentials.username, Rails.application.credentials.password)}"
+    @credentials = "Basic #{@credentials_manager.base64encode(ENV["USERNAME"], ENV["PASSWORD"])}"
     @auth_headers = {authorization: @credentials}
   end
 
