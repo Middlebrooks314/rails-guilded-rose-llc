@@ -96,7 +96,7 @@ RSpec.describe "Items API", type: :request do
   describe "POST api/v1/items" do
     before(:each) do
       @credentials_manager = CredentialsManager.new
-      credentials = "Basic #{@credentials_manager.base64encode(Rails.application.credentials.username, Rails.application.credentials.password)}"
+      credentials = "Basic #{@credentials_manager.base64encode(ENV["USERNAME"], ENV["PASSWORD"])}"
       @auth_headers = {authorization: credentials}
     end
 
