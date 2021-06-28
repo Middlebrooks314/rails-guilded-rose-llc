@@ -4,7 +4,8 @@ RSpec.describe Item, type: :model do
   subject do
     described_class.new(name: "Anything",
                         sell_in: 10,
-                        quality: 50
+                        quality: 50,
+                        description: "Something Else"
                       )
   end
 

@@ -6,7 +6,8 @@ class Api::V1::ItemPresenter < ApplicationController
       id: item.id,
       name: item.name,
       quality: item.quality,
-      sellIn: item.sell_in
+      sellIn: item.sell_in,
+      description: item.description
     }
   end
 
@@ -14,7 +15,8 @@ class Api::V1::ItemPresenter < ApplicationController
     {
       "name" => params[:name],
       "sell_in" => params[:sellIn],
-      "quality" => params[:quality]
+      "quality" => params[:quality],
+      "description" => params[:description]
     }
   end
 end

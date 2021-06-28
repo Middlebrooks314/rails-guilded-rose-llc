@@ -23,6 +23,6 @@ class Api::V1::ItemsController < ApplicationController
 
   private
   def item_params
-    params.permit(:name, :sell_in, :quality)
+    params.permit(:name, :sell_in, :quality, :description)
   end
 end
