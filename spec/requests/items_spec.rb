@@ -1,4 +1,5 @@
 require "rails_helper"
+require_relative "../../lib/credentials_manager"
 
 RSpec.describe "Items API", type: :request do
   describe "GET api/v1/items", type: :request do
@@ -94,38 +95,66 @@ RSpec.describe "Items API", type: :request do
   end
 
   describe "POST api/v1/items" do
+    before(:each) do
+      @credentials_manager = CredentialsManager.new
+      credentials = "Basic #{@credentials_manager.base64encode(ENV["USERNAME"], ENV["PASSWORD"])}"
+      @auth_headers = {authorization: credentials}
+    end
+
     context "when item post request attributes are valid" do
       valid_attributes = {name: "Asparagus", sellIn: 10, quality: 25, description: "stick-like green vegetable"}
 
       it "creates a new item in the database" do
 
-        expect { post "/api/v1/items", params: valid_attributes }.to change(Item, :count).by(+1)
+        expect { post "/api/v1/items", params: valid_attributes, headers: @auth_headers}.to change(Item, :count).by(+1)
       end
 
       it "returns status code 201" do
-        post "/api/v1/items", params: valid_attributes
+        valid_attributes = {name: "Asparagus", sellIn: 10, quality: 25}
+
+        post "/api/v1/items", params: valid_attributes, headers: @auth_headers
 
         expect(response).to have_http_status(201)
       end
     end
 
     context "when item post request attributes are invalid" do
-      invalid_attributes = {title: "Lorem Ipsum"}
       it "does not create a new item in the database" do
-
-        expect { post "/api/v1/items", params: invalid_attributes }.to change(Item, :count).by(0)
+        invalid_attributes = {title: "Lorem Ipsum"}
+        
+        expect { post "/api/v1/items", params: invalid_attributes, headers: @auth_headers }.to change(Item, :count).by(0)
       end
 
       it "returns status code 422 for invalid attributes" do
-        post "/api/v1/items", params: invalid_attributes
+        invalid_attributes = {title: "Lorem Ipsum"}
+
+        post "/api/v1/items", params: invalid_attributes, headers: @auth_headers
 
         expect(response).to have_http_status(422)
       end
 
       it "returns a failure message for missing attributes" do
-        post "/api/v1/items", params: invalid_attributes
+        invalid_attributes = {title: "Lorem Ipsum"}
+
+        post "/api/v1/items", params: invalid_attributes, headers: @auth_headers
 
         expect(response.body).to match(/Validation failed: Name can't be blank/)
+      end
+
+      it "returns status code 401 for missing authorization headers" do
+        valid_attributes = {name: "Lorem Ipsum", sellIn: 15, quality: 85}
+
+        post "/api/v1/items", params: valid_attributes
+
+        expect(response).to have_http_status(401)
+      end
+
+      it "returns a failure message for missing authorization headers" do
+        valid_attributes = {name: "Lorem Ipsum", sellIn: 15, quality: 85}
+
+        post "/api/v1/items", params: valid_attributes
+
+        expect(response.body).to match(/HTTP Basic: Access denied./)
       end
     end
   end

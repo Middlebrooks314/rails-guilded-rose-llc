@@ -23,6 +23,9 @@
 !/storage/.keep
 .byebug_history
 
+# Ignore auth credentials for basic auth
+/config/local_env.yml
+
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
