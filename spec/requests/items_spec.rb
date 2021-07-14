@@ -121,7 +121,7 @@ RSpec.describe "Items API", type: :request do
     context "when item post request attributes are invalid" do
       it "does not create a new item in the database" do
         invalid_attributes = {title: "Lorem Ipsum"}
-        
+
         expect { post "/api/v1/items", params: invalid_attributes, headers: @auth_headers }.to change(Item, :count).by(0)
       end
 
