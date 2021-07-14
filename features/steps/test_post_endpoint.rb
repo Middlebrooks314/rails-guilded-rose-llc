@@ -12,7 +12,7 @@ class Spinach::Features::TestPostEndpoint < Spinach::FeatureSteps
   step "I create an Item" do
 
     options = {
-      body: {name: "Foo", quality: 4, sellIn: 4, descripton: "Bar"},
+      body: {name: "Foo", quality: 4, sellIn: 4, description: "FooDescription"},
       headers: @auth_headers
     }
 
