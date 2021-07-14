@@ -13,10 +13,10 @@ class Api::V1::ItemPresenter < ApplicationController
 
   def self.snakecase_keys(params)
     {
-      "name" => params[:name],
-      "sell_in" => params[:sellIn],
-      "quality" => params[:quality],
-      "description" => params[:description]
+      name: params[:name],
+      sell_in: params[:sellIn],
+      quality: params[:quality],
+      description: params[:description]
     }
   end
 end

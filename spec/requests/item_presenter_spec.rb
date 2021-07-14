@@ -29,7 +29,7 @@ describe Api::V1::ItemPresenter do
     params = {name: "Foo", sellIn: 5, quality: 11, description: "Bar"}
 
     actual = item_presenter.snakecase_keys(params)
-    expected = {"name" => "Foo", "sell_in" => 5, "quality" => 11, "description" => "Bar"}
+    expected = {name: "Foo", sell_in: 5, quality: 11, description: "Bar"}
 
     expect(actual).to eq(expected)
   end
@@ -39,7 +39,7 @@ describe Api::V1::ItemPresenter do
     params = {name: "Foo", sellIn: 5, quality: 11, description: "Bar", fooBar: 5}
 
     actual = item_presenter.snakecase_keys(params)
-    expected = {"name" => "Foo", "quality" => 11, "sell_in" => 5, "description" => "Bar"}
+    expected = {name: "Foo", quality: 11, sell_in: 5, description: "Bar"}
 
     expect(actual).to eq(expected)
   end
@@ -49,7 +49,7 @@ describe Api::V1::ItemPresenter do
     params = {name: "FooBar", sellIn: 5}
 
     actual = item_presenter.snakecase_keys(params)
-    expected = {"name" => "FooBar", "sell_in" => 5, "quality" => nil, "description" => nil}
+    expected = {name: "FooBar", sell_in: 5, quality: nil, description: nil}
 
     expect(actual).to eq(expected)
   end
@@ -59,7 +59,7 @@ describe Api::V1::ItemPresenter do
     params = {name: "", sellIn: 5, quality: 5, description: ""}
 
     actual = item_presenter.snakecase_keys(params)
-    expected = {"name" => "", "sell_in" => 5, "quality" => 5, "description" => ""}
+    expected = {name: "", sell_in: 5, quality: 5, description: ""}
 
     expect(actual).to eq(expected)
   end
@@ -69,7 +69,7 @@ describe Api::V1::ItemPresenter do
     params = {name: "FooBar", sellIn: 5, quality: nil, description: "Bar"}
 
     actual = item_presenter.snakecase_keys(params)
-    expected = {"name" => "FooBar", "sell_in" => 5, "quality" => nil, "description" => "Bar"}
+    expected = {name: "FooBar", sell_in: 5, quality: nil, description: "Bar"}
 
     expect(actual).to eq(expected)
   end
