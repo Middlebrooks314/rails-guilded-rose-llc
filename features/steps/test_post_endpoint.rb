@@ -10,7 +10,12 @@ class Spinach::Features::TestPostEndpoint < Spinach::FeatureSteps
   step "I create an Item" do
 
     options = {
-      body: {name: "Foo", quality: 4, sellIn: 4, description: "FooDescription"},
+      body: {
+        name: "Foo",
+        quality: 4,
+        sellIn: 4,
+        description: "An optional description of Foo"
+      },
       headers: @auth_headers
     }
 
@@ -19,7 +24,12 @@ class Spinach::Features::TestPostEndpoint < Spinach::FeatureSteps
 
   step "I create another Item" do
     options = {
-      body: {name: "Bar", quality: 5, sellIn: 5, description: "BarDescription"},
+      body: {
+        name: "Bar",
+        quality: 5,
+        sellIn: 5,
+        description: "An optional description of Bar"
+      },
       headers: @auth_headers
     }
 
@@ -28,7 +38,12 @@ class Spinach::Features::TestPostEndpoint < Spinach::FeatureSteps
 
   step "I create a third Item" do
     options = {
-      body: {name: "FooBar", quality: 6, sellIn: 6, description: "FooBarDescription"},
+      body: {
+        name: "FooBar",
+        quality: 6,
+        sellIn: 6,
+        description: "An optional description of FooBar"
+      },
       headers: @auth_headers
     }
 
@@ -49,17 +64,17 @@ class Spinach::Features::TestPostEndpoint < Spinach::FeatureSteps
     expect(@items[0]["name"]).to eq("Bar")
     expect(@items[0]["quality"].to_i).to eq(5)
     expect(@items[0]["sellIn"].to_i).to eq(5)
-    expect(@items[0]["description"]).to eq("BarDescription")
+    expect(@items[0]["description"]).to eq("An optional description of Bar")
 
     expect(@items[1]["name"]).to eq("Foo")
     expect(@items[1]["quality"].to_i).to eq(4)
     expect(@items[1]["sellIn"].to_i).to eq(4)
-    expect(@items[1]["description"]).to eq("FooDescription")
+    expect(@items[1]["description"]).to eq("An optional description of Foo")
 
     expect(@items[2]["name"]).to eq("FooBar")
     expect(@items[2]["quality"].to_i).to eq(6)
     expect(@items[2]["sellIn"].to_i).to eq(6)
-    expect(@items[2]["description"]).to eq("FooBarDescription")
+    expect(@items[2]["description"]).to eq("An optional description of FooBar")
   end
 
   step "the response should have a content type header type of `application/json`" do
