@@ -8,5 +8,5 @@ Feature: Test post endpoint
     And I create a third Item
     When I request an index of Items
     Then I should see three items
-    And each item should have fields name, quality, sell_in
+    And each item should have fields name, quality, sell_in, description
     And the response should have a content type header type of `application/json`

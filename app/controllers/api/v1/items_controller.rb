@@ -1,6 +1,7 @@
 require_relative "item_presenter"
 
 class Api::V1::ItemsController < ApplicationController
+  include ActionController::HttpAuthentication::Basic::ControllerMethods
   http_basic_authenticate_with name: ENV["USERNAME"], password: ENV["PASSWORD"], only: :create
   def index
     items = Item.all.map do |item|
@@ -25,6 +26,6 @@ class Api::V1::ItemsController < ApplicationController
   private
 
   def item_params
-    params.permit(:name, :sell_in, :quality)
+    params.permit(:name, :sell_in, :quality, :description)
   end
 end

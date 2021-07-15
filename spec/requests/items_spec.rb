@@ -45,6 +45,7 @@ RSpec.describe "Items API", type: :request do
       expect(actual_item.fetch(:name)).to eq("Lorem Ipsum")
       expect(actual_item.fetch(:sellIn)).to eq(10)
       expect(actual_item.fetch(:quality)).to eq(99)
+      expect(actual_item.fetch(:description)).to eq("dolor sit amet")
     end
   end
 
@@ -101,8 +102,9 @@ RSpec.describe "Items API", type: :request do
     end
 
     context "when item post request attributes are valid" do
+      valid_attributes = {name: "Asparagus", sellIn: 10, quality: 25, description: "stick-like green vegetable"}
+
       it "creates a new item in the database" do
-        valid_attributes = {name: "Asparagus", sellIn: 10, quality: 25}
 
         expect { post "/api/v1/items", params: valid_attributes, headers: @auth_headers}.to change(Item, :count).by(+1)
       end
