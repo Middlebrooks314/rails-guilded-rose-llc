@@ -19,5 +19,8 @@ RSpec.describe Review, type: :model do
     expect(subject).to be_valid
   end
 
-  it "is not valid without text"
+  it "is not valid without text" do
+    subject.text = nil
+    expect(subject).to_not be_valid
+  end
 end
