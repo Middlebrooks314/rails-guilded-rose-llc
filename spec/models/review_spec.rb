@@ -25,4 +25,13 @@ RSpec.describe Review, type: :model do
     )
     expect(subject).to_not be_valid
   end
+
+  it "raises PG database error without text" do
+    subject = described_class.new(
+      item: @bacon,
+      text: nil
+    )
+
+    expect {subject.save!(validate: false) }.to raise_error(ActiveRecord::NotNullViolation, /PG::NotNullViolation/)
+  end
 end
