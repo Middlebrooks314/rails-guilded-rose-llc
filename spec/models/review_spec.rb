@@ -32,6 +32,6 @@ RSpec.describe Review, type: :model do
       text: nil
     )
 
-    expect {subject.save!(validate: false) }.to raise_error(ActiveRecord::NotNullViolation, /PG::NotNullViolation/)
+    expect {subject.save!(validate: false) }.to raise_error(ActiveRecord::NotNullViolation)
   end
 end
