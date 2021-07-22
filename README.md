@@ -70,24 +70,21 @@ curl https://localhost:3000.com/api/v1/items | jq
       "name": "Carrots",
       "sell_in": 10,
       "quality": 15,
-      "created_at": "2021-05-06T21:31:36.850Z",
-      "updated_at": "2021-05-06T21:31:36.850Z"
+      "description": null
     },
     {
       "id": 2,
       "name": "Basil",
       "sell_in": 11,
       "quality": 25,
-      "created_at": "2021-05-06T21:32:05.380Z",
-      "updated_at": "2021-05-06T21:32:05.380Z"
+      "description": "a sweet herb"
     },
     {
       "id": 3,
       "name": "Dog Treats",
       "sell_in": 15,
       "quality": 20,
-      "created_at": "2021-05-06T21:33:15.245Z",
-      "updated_at": "2021-05-06T21:33:15.245Z"
+      "description": "Doggy ice cream"
     }
   ]
   ```
@@ -170,7 +167,54 @@ curl --user <username>:<password> http://localhost:3000//api/v1/items -X POST -F
   ```
  
 
+### INDEX Reviews
 
+  Returns json data about all reviews associated with a particular item.
+
+* **URL**
+
+  /api/v1/items/:id/reviews
+
+* **Method:**
+
+  `GET`
+  
+*  **URL Params**
+
+   **Required:**
+ 
+   `id=[integer]`
+
+* **Data Params**
+
+  None
+* **Sample cURL Request:**
+
+```bash
+curl https://localhost:3000.com/api/v1/items/3/reviews | jq
+```
+
+* **Success Response:**
+
+  * **Code:** 200
+ 
+    **Content:**
+  ```javascript
+  [
+    {
+      "text": "this made my dog sick"
+    },
+    {
+      "text": "a little too salty for my taste"
+    },
+    {
+      "text": "after eating this my dog was suddenly able to fly"
+    }
+  ]
+  ```
+
+
+---
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
