@@ -19,6 +19,15 @@ RSpec.describe "Reviews API", type: :request do
       expect(json.size).to eq(1)
     end
 
+    it "returns the correct review text" do
+      FactoryBot.create(:item, id: 1)
+      FactoryBot.create(:review, text: "5 out of 5 stars", item: Item.find(1))
+
+      get "/api/v1/items/1/reviews"
+
+      expect(json[0]["text"]).to eq("5 out of 5 stars")
+    end
+
     it "returns many reviews as a list" do
       FactoryBot.create(:item, id: 1)
       FactoryBot.create(:review, item: Item.find(1))
