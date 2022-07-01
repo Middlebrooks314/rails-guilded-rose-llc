@@ -1,4 +1,6 @@
 # Guilded Rose LLC Store API
+[![Middlebrooks314](https://circleci.com/gh/Middlebrooks314/rails-guilded-rose-llc.svg?style=shield)](https://app.circleci.com/pipelines/github/Middlebrooks314/rails-guilded-rose-llc)
+
 
 Guilded Rose LLC Store API is a RESTful API for the Gilded Rose storefront inventory kata. 
 
